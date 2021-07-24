@@ -22,7 +22,6 @@ class FolderController extends Controller
         $folder->title = $request->title;
 
         // // インスタンスの状態をデータベースに書き込む
-        // $folder->save();
         // ★ ユーザーに紐づけて保存
         Auth::user()->folders()->save($folder);
 

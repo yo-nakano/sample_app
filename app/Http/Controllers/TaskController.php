@@ -13,17 +13,8 @@ class TaskController extends Controller
 {
     public function index(Folder $folder)
     {
-        // $folders = Folder::all();
         // ★ ユーザーのフォルダを取得する
         $folders = Auth::user()->folders()->get();
-
-        // $current_folder = Folder::find($id);
-        // if (is_null($current_folder)) {
-        //     abort(404);
-        // }
-
-        // $tasks = Task::where('folder_id', $current_folder->id)->get();
-        // $tasks = $current_folder->tasks()->get();
 
         // 選ばれたフォルダに紐づくタスクを取得する
         $tasks = $folder->tasks()->get();
@@ -47,12 +38,10 @@ class TaskController extends Controller
 
     public function create(Folder $folder, CreateTask $request)
     {
-        // $current_folder = Folder::find($id);
         $task = new Task();
         $task->title = $request->title;
         $task->due_date = $request->due_date;
 
-        // $current_folder->tasks()->save($task);
         $folder->tasks()->save($task);
 
         return redirect()->route('tasks.index', [
@@ -67,7 +56,6 @@ class TaskController extends Controller
     {
         $this->checkRelation($folder, $task);
         
-        // $task = Task::find($task_id);
         return view('tasks/edit', [
             'task' => $task,
         ]);
@@ -77,7 +65,6 @@ class TaskController extends Controller
     {
         $this->checkRelation($folder, $task);
 
-        // $task = Task::find($task_id);
         $task->title = $request->title;
         $task->status = $request->status;
         $task->due_date = $request->due_date;
